@@ -38,6 +38,23 @@ export default function TabScreenShot() {
     }
   };
 
+  useEffect(() => {
+    browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+      if (message.type === SCREENSHOT_ACTION_TYPES.CAPTURE_SCREENSHOT) {
+        console.log("popup~~ CAPTURE_SCREENSHOT received");
+      }
+    });
+    return () => {
+      browser.runtime.onMessage.removeListener(
+        (message, sender, sendResponse) => {
+          if (message.type === SCREENSHOT_ACTION_TYPES.CAPTURE_SCREENSHOT) {
+            console.log("popup~~ CAPTURE_SCREENSHOT received");
+          }
+        },
+      );
+    };
+  }, []);
+
   return (
     <div className='space-y-4 p-4'>
       <h1 className='text-lg font-semibold'>Element Selection Tool</h1>

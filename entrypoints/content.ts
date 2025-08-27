@@ -1,5 +1,5 @@
 import { SCREENSHOT_ACTION_TYPES } from "@/constants/actionTypes";
-import { imageUtils } from "@/lib/utils";
+import { clipboardUtils, imageUtils } from "@/lib/utils";
 
 // Simple element hover highlighting
 const ELEMENT_HOVER_STYLES = `
@@ -10,6 +10,27 @@ const ELEMENT_HOVER_STYLES = `
   }
 `;
 
+const POPUP_STYLES = `
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10%;
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 1000;
+  }
+  .popup img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .popup img:hover {
+    cursor: pointer;
+  }
+`;
 // Simple hover highlighter
 class ElementHoverHighlighter {
   private styleElement: HTMLStyleElement | null = null;
@@ -155,11 +176,11 @@ export default defineContentScript({
         // take count with window.scrollY
 
         return new Promise<string>((resolve, reject) => {
-          img.onerror = () => reject(new Error("Failed to load image"));
+          // img.onerror = () => reject(new Error("Failed to load image"));
           img.src = screenshot;
           img.onload = () => {
             try {
-              const dpr = window.devicePixelRatio || 10;
+              const dpr = window.devicePixelRatio || 1;
 
               // adjust for scroll and DPR
               const sx = Math.round(boundingClientRect.left * dpr);
@@ -177,24 +198,8 @@ export default defineContentScript({
                 reject(new Error("No 2D context"));
                 return;
               }
-
               ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
-
-              // Compress the result with lower quality JPEG
-              const result = canvas.toDataURL("image/jpeg", 0.5); // 70% quality for compression
-              canvas.toBlob(function (blob) {
-                if (blob) {
-                  try {
-                    navigator.clipboard.write([
-                      new ClipboardItem({
-                        "image/png": blob,
-                      }),
-                    ]);
-                  } catch (error) {
-                    console.error(error);
-                  }
-                }
-              });
+              const result = canvas.toDataURL("image/png", 0.5); // 70% quality for compression
 
               resolve(result);
             } catch (error) {
@@ -208,6 +213,20 @@ export default defineContentScript({
       }
     };
     console.log("Content script loaded");
+
+    const ScreenShotLayerPopup = (imageSrc: Blob) => {
+      const div = document.createElement("div");
+      div.classList.add("popup");
+
+      const style = document.createElement("style");
+      style.textContent = POPUP_STYLES;
+      document.head.appendChild(style);
+
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(imageSrc);
+      div.appendChild(img);
+      document.body.appendChild(div);
+    };
 
     browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
       if (message.type === SCREENSHOT_ACTION_TYPES.START_ELEMENT_SELECTION) {
@@ -223,10 +242,11 @@ export default defineContentScript({
           message.boundingClientRect,
         ).then((croppedScreenshot) => {
           const blob = imageUtils.base64ToBlob(croppedScreenshot);
-          console.log("blob:", blob);
+          clipboardUtils.copyToClipboard(blob);
+          ScreenShotLayerPopup(blob);
         });
 
-        sendResponse({ success: true, croppedScreenshot });
+        sendResponse({ success: true });
         elementHoverHighlighter.destroy();
         return true;
       }
