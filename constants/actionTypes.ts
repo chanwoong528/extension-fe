@@ -1,0 +1,15 @@
+// Simple action types for element hover functionality
+export const ELEMENT_HOVER_TYPES = {
+  HOVER_START: "HOVER_START",
+  HOVER_END: "HOVER_END",
+} as const;
+
+export const SCREENSHOT_ACTION_TYPES = {
+  START_ELEMENT_SELECTION: "START_ELEMENT_SELECTION",
+  STOP_ELEMENT_SELECTION: "STOP_ELEMENT_SELECTION",
+  CAPTURE_SCREENSHOT: "CAPTURE_SCREENSHOT",
+} as const;
+
+
+
+

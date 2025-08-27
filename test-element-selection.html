@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Element Selection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px;
+        }
+        
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+        
+        .button:hover {
+            background: #0056b3;
+        }
+        
+        .button.secondary {
+            background: #6c757d;
+        }
+        
+        .button.secondary:hover {
+            background: #545b62;
+        }
+        
+        .form-group {
+            margin: 15px 0;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .instructions {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .instructions h3 {
+            margin-top: 0;
+            color: #0c5460;
+        }
+        
+        .instructions ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Element Selection Test Page</h1>
+            <p>Test the Chrome extension's element selection functionality</p>
+        </div>
+        
+        <div class="instructions">
+            <h3>How to Test Element Selection:</h3>
+            <ul>
+                <li><strong>Keyboard Shortcut:</strong> Press <code>Ctrl+Shift+S</code> to start element selection</li>
+                <li><strong>Extension Button:</strong> Click the extension icon and use the element selection feature</li>
+                <li><strong>Hover:</strong> Move your mouse over elements to see them highlighted</li>
+                <li><strong>Select:</strong> Click on an element to select it</li>
+                <li><strong>Cancel:</strong> Press <code>ESC</code> or right-click to cancel selection</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>Interactive Elements</h2>
+            <button class="button" id="test-button">Test Button</button>
+            <button class="button secondary">Secondary Button</button>
+            <button class="button" style="background: #28a745;">Success Button</button>
+        </div>
+        
+        <div class="section">
+            <h2>Form Elements</h2>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" rows="4" placeholder="Enter your message"></textarea>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Content Cards</h2>
+            <div class="card">
+                <h3>Card Title 1</h3>
+                <p>This is a sample card with some content. You can select this entire card or individual elements within it.</p>
+                <button class="button">Card Action</button>
+            </div>
+            
+            <div class="card">
+                <h3>Card Title 2</h3>
+                <p>Another card with different content. Each card has unique styling and can be selected independently.</p>
+                <span class="highlight">This is a highlighted span element</span>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Nested Elements</h2>
+            <div class="card">
+                <h3>Parent Container</h3>
+                <div style="border: 2px dashed #ccc; padding: 10px; margin: 10px 0;">
+                    <p>This is a nested div with a dashed border</p>
+                    <div style="background: #e9ecef; padding: 8px; margin: 5px 0;">
+                        <strong>Deeply nested element</strong>
+                        <span style="color: #dc3545;">with colored text</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Special Elements</h2>
+            <p>This paragraph contains <a href="#" style="color: #007bff;">a link</a> and <strong>bold text</strong> and <em>italic text</em>.</p>
+            <ul>
+                <li>List item 1</li>
+                <li>List item 2 with <code>inline code</code></li>
+                <li>List item 3</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>Positioned Elements</h2>
+            <div style="position: relative; height: 100px; border: 1px solid #ddd;">
+                <div style="position: absolute; top: 10px; left: 10px; background: #ffc107; padding: 5px; border-radius: 3px;">
+                    Top Left
+                </div>
+                <div style="position: absolute; top: 10px; right: 10px; background: #17a2b8; padding: 5px; border-radius: 3px; color: white;">
+                    Top Right
+                </div>
+                <div style="position: absolute; bottom: 10px; left: 10px; background: #28a745; padding: 5px; border-radius: 3px; color: white;">
+                    Bottom Left
+                </div>
+                <div style="position: absolute; bottom: 10px; right: 10px; background: #dc3545; padding: 5px; border-radius: 3px; color: white;">
+                    Bottom Right
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Add some interactivity to test elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers to buttons
+            const buttons = document.querySelectorAll('.button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    alert('Button clicked: ' + this.textContent);
+                });
+            });
+            
+            // Add focus handlers to form elements
+            const inputs = document.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.style.borderColor = '#007bff';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.style.borderColor = '#ddd';
+                });
+            });
+            
+            // Add hover effects to cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 4px 15px rgba(0,0,0,0.15)';
+                    this.style.transition = 'all 0.3s ease';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+            
+            console.log('Test page loaded successfully!');
+            console.log('Use Ctrl+Shift+S to start element selection or click the extension icon.');
+        });
+    </script>
+</body>
+</html>
